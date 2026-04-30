@@ -111,6 +111,42 @@ extension WindowDirection {
             String(localized: "Top Screen", comment: "Window action")
         case .bottomScreen:
             String(localized: "Bottom Screen", comment: "Window action")
+        case .nextSpace:
+            String(localized: "Move to Next Space", comment: "Window action")
+        case .previousSpace:
+            String(localized: "Move to Previous Space", comment: "Window action")
+        case .moveToSpace1:
+            String(localized: "Move to Desktop 1", comment: "Window action")
+        case .moveToSpace2:
+            String(localized: "Move to Desktop 2", comment: "Window action")
+        case .moveToSpace3:
+            String(localized: "Move to Desktop 3", comment: "Window action")
+        case .moveToSpace4:
+            String(localized: "Move to Desktop 4", comment: "Window action")
+        case .moveToSpace5:
+            String(localized: "Move to Desktop 5", comment: "Window action")
+        case .moveToSpace6:
+            String(localized: "Move to Desktop 6", comment: "Window action")
+        case .moveToSpace7:
+            String(localized: "Move to Desktop 7", comment: "Window action")
+        case .moveToSpace8:
+            String(localized: "Move to Desktop 8", comment: "Window action")
+        case .moveToSpace9:
+            String(localized: "Move to Desktop 9", comment: "Window action")
+        case .moveToSpace10:
+            String(localized: "Move to Desktop 10", comment: "Window action")
+        case .moveToSpace11:
+            String(localized: "Move to Desktop 11", comment: "Window action")
+        case .moveToSpace12:
+            String(localized: "Move to Desktop 12", comment: "Window action")
+        case .moveToSpace13:
+            String(localized: "Move to Desktop 13", comment: "Window action")
+        case .moveToSpace14:
+            String(localized: "Move to Desktop 14", comment: "Window action")
+        case .moveToSpace15:
+            String(localized: "Move to Desktop 15", comment: "Window action")
+        case .moveToSpace16:
+            String(localized: "Move to Desktop 16", comment: "Window action")
         case .larger:
             String(localized: "Larger", comment: "Window action")
         case .smaller:
