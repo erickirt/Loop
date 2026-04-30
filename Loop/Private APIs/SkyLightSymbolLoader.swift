@@ -119,7 +119,23 @@ extension SkyLightSymbolLoader {
 
     typealias SLPSPostEventRecordToFunc = @convention(c) (_ psn: UnsafeMutablePointer<ProcessSerialNumber>, _ bytes: UnsafeMutablePointer<UInt8>) -> CGError
     static let SLPSPostEventRecordTo: SLPSPostEventRecordToFunc? = loadSymbol("SLPSPostEventRecordTo")
+
+    typealias SLSGetSymbolicHotKeyValueFunc = @convention(c) (
+        _ hotKey: SLSSymbolicHotKey,
+        _ outChar: UnsafeMutablePointer<UInt16>?,
+        _ outKeyCode: UnsafeMutablePointer<CGKeyCode>?,
+        _ outFlags: UnsafeMutablePointer<UInt32>?
+    ) -> CGError
+    static let SLSGetSymbolicHotKeyValue: SLSGetSymbolicHotKeyValueFunc? = loadSymbol("SLSGetSymbolicHotKeyValue")
+
+    typealias SLSIsSymbolicHotKeyEnabledFunc = @convention(c) (_ hotKey: SLSSymbolicHotKey) -> Bool
+    static let SLSIsSymbolicHotKeyEnabled: SLSIsSymbolicHotKeyEnabledFunc? = loadSymbol("SLSIsSymbolicHotKeyEnabled")
+
+    typealias SLSSetSymbolicHotKeyEnabledFunc = @convention(c) (_ hotKey: SLSSymbolicHotKey, _ enabled: Bool) -> CGError
+    static let SLSSetSymbolicHotKeyEnabled: SLSSetSymbolicHotKeyEnabledFunc? = loadSymbol("SLSSetSymbolicHotKeyEnabled")
 }
+
+typealias SLSSymbolicHotKey = Int32
 
 typealias SLSConnectionID = UInt32
 
