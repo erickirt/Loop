@@ -195,15 +195,6 @@ final class WindowActionEngine {
         case nextSpace
         case desktop(UInt)
 
-        var hotKey: SLSSymbolicHotKey? {
-            switch self {
-            case .previousSpace: 79
-            case .nextSpace: 81
-            case let .desktop(n) where (1 ... 16).contains(n): SLSSymbolicHotKey(118 + n - 1)
-            case .desktop: nil
-            }
-        }
-
         var description: String {
             switch self {
             case .previousSpace: "previous space"
@@ -214,62 +205,25 @@ final class WindowActionEngine {
     }
 
     private func throwWindow(_ window: Window, to space: SpaceDestination) async {
-        guard let hotKey = space.hotKey else {
-            log.error("invalid destination \(space.description)")
+        guard #available(macOS 14.0, *) else {
+            log.error("Cross-space window movement requires macOS 14.0 or later")
             return
         }
 
-        // Capture the cursor position so we can restore it after the throw.
-        let originalCursor = CGEvent(source: nil)?.location ?? .zero
+        let targetSpace: SkyLightToolBelt.ManagedSpace? = switch space {
+        case .previousSpace:
+            SkyLightToolBelt.desktopSpace(forWindow: window.cgWindowID, offset: -1)
+        case .nextSpace:
+            SkyLightToolBelt.desktopSpace(forWindow: window.cgWindowID, offset: 1)
+        case let .desktop(number):
+            SkyLightToolBelt.desktopSpace(forWindow: window.cgWindowID, desktopNumber: number)
+        }
 
-        // Resolve the symbolic hotkey (also auto-enables it if disabled).
-        guard let (keyCode, flags) = SkyLightToolBelt.resolveSymbolicHotKey(hotKey) else {
+        guard let targetSpace else {
+            log.error("Could not resolve target \(space.description) for window \(window.cgWindowID)")
             return
         }
 
-        // Compute the drag anchor: midX of minimize button, midY between window top and minimize button center.
-        guard let minimizeButton: AXUIElement = try? window.axWindow.getValue(.minimizeButton),
-              let minPos: CGPoint = try? minimizeButton.getValue(.position),
-              let minSize: CGSize = try? minimizeButton.getValue(.size)
-        else {
-            log.error("could not resolve minimize button on focused window")
-            return
-        }
-        let winFrame = window.frame
-        let minRect = CGRect(origin: minPos, size: minSize)
-        let anchor = CGPoint(
-            x: minRect.midX,
-            y: winFrame.origin.y + abs(winFrame.origin.y - minRect.minY) / 2.0
-        )
-
-        // Synthesize move + mouseDown + drag + mouseUp at anchor
-        let move = CGEvent(mouseEventSource: nil, mouseType: .mouseMoved,    mouseCursorPosition: anchor, mouseButton: .left)
-        let down = CGEvent(mouseEventSource: nil, mouseType: .leftMouseDown, mouseCursorPosition: anchor, mouseButton: .left)
-        let drag = CGEvent(mouseEventSource: nil, mouseType: .leftMouseDragged, mouseCursorPosition: anchor, mouseButton: .left)
-        let up   = CGEvent(mouseEventSource: nil, mouseType: .leftMouseUp,   mouseCursorPosition: anchor, mouseButton: .left)
-        move?.flags = []
-        down?.flags = []
-        drag?.flags = []
-        up?.flags = []
-
-        move?.post(tap: .cghidEventTap)
-        down?.post(tap: .cghidEventTap)
-        drag?.post(tap: .cghidEventTap)
-
-        // Wait 50 ms before sending the space-switch hotkey
-        try? await Task.sleep(for: .milliseconds(50))
-        let kDown = CGEvent(keyboardEventSource: nil, virtualKey: keyCode, keyDown: true)
-        let kUp   = CGEvent(keyboardEventSource: nil, virtualKey: keyCode, keyDown: false)
-        kDown?.flags = flags
-        kUp?.flags = []
-        kDown?.post(tap: .cghidEventTap)
-        kUp?.post(tap: .cghidEventTap)
-
-        // Wait 400 ms for the space transition animation, then release the mouse
-        try? await Task.sleep(for: .milliseconds(400))
-        up?.post(tap: .cghidEventTap)
-
-        // Restore the cursor to its pre-throw position.
-        CGWarpMouseCursorPosition(originalCursor)
+        SkyLightToolBelt.moveWindow(window.cgWindowID, toSpace: targetSpace.id)
     }
 }

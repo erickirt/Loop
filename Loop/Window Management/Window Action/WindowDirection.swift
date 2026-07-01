@@ -92,9 +92,10 @@ enum WindowDirection: String, CaseIterable, Identifiable, Codable {
             .moveToSpace1, .moveToSpace2, .moveToSpace3, .moveToSpace4,
             .moveToSpace5, .moveToSpace6, .moveToSpace7, .moveToSpace8,
             .moveToSpace9, .moveToSpace10, .moveToSpace11, .moveToSpace12,
-            .moveToSpace13, .moveToSpace14, .moveToSpace15, .moveToSpace16,
+            .moveToSpace13, .moveToSpace14, .moveToSpace15, .moveToSpace16
         ]
     }
+
     static var sizeAdjustment: [WindowDirection] { [.larger, .smaller, .scaleUp, .scaleDown] }
     static var shrink: [WindowDirection] { [.shrinkTop, .shrinkBottom, .shrinkRight, .shrinkLeft, .shrinkHorizontal, .shrinkVertical] }
     static var grow: [WindowDirection] { [.growTop, .growBottom, .growRight, .growLeft, .growHorizontal, .growVertical] }
