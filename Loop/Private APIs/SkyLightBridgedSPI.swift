@@ -12,18 +12,6 @@ import Foundation
 
 @available(macOS 14.0, *)
 enum SkyLightBridgedSPI {
-    private enum OperationClassName {
-        static let moveWindowsToManagedSpace = "SLSBridgedMoveWindowsToManagedSpaceOperation"
-        static let copyManagedDisplaySpaces = "SLSBridgedCopyManagedDisplaySpacesOperation"
-        static let copySpacesForWindows = "SLSBridgedCopySpacesForWindowsOperation"
-    }
-
-    private enum SelectorName {
-        static let performWithWMBridgeDelegate = "performWithWMBridgeDelegate"
-        static let initWithWindowsSpaceID = "initWithWindows:spaceID:"
-        static let initWithOptionsWindows = "initWithOptions:windows:"
-    }
-
     private static let objcMessageSend: UnsafeMutableRawPointer? = {
         guard let handle = dlopen(nil, RTLD_LAZY) else {
             return nil
@@ -42,7 +30,7 @@ enum SkyLightBridgedSPI {
     }
 
     static func copyManagedDisplaySpaces() -> [NSDictionary]? {
-        guard let operationClass = NSClassFromString(OperationClassName.copyManagedDisplaySpaces) as? NSObject.Type else {
+        guard let operationClass = NSClassFromString("SLSBridgedCopyManagedDisplaySpacesOperation") as? NSObject.Type else {
             return nil
         }
 
@@ -72,7 +60,7 @@ enum SkyLightBridgedSPI {
             return nil
         }
 
-        let selector = NSSelectorFromString(SelectorName.performWithWMBridgeDelegate)
+        let selector = NSSelectorFromString("performWithWMBridgeDelegate")
         guard operation.responds(to: selector) else {
             return nil
         }
@@ -97,12 +85,12 @@ enum SkyLightBridgedSPI {
         spaceID: UInt64
     ) -> AnyObject? {
         guard let objcMessageSend,
-              let operationClass = NSClassFromString(OperationClassName.moveWindowsToManagedSpace) as? NSObject.Type
+              let operationClass = NSClassFromString("SLSBridgedMoveWindowsToManagedSpaceOperation") as? NSObject.Type
         else {
             return nil
         }
 
-        let initializer = NSSelectorFromString(SelectorName.initWithWindowsSpaceID)
+        let initializer = NSSelectorFromString("initWithWindows:spaceID:")
         guard operationClass.instancesRespond(to: initializer),
               let allocatedOperation = allocate(operationClass)
         else {
@@ -124,12 +112,12 @@ enum SkyLightBridgedSPI {
         options: SLSSpaceMask
     ) -> AnyObject? {
         guard let objcMessageSend,
-              let operationClass = NSClassFromString(OperationClassName.copySpacesForWindows) as? NSObject.Type
+              let operationClass = NSClassFromString("SLSBridgedCopySpacesForWindowsOperation") as? NSObject.Type
         else {
             return nil
         }
 
-        let initializer = NSSelectorFromString(SelectorName.initWithOptionsWindows)
+        let initializer = NSSelectorFromString("initWithOptions:windows:")
         guard operationClass.instancesRespond(to: initializer),
               let allocatedOperation = allocate(operationClass)
         else {
