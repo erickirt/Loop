@@ -316,6 +316,16 @@ enum SkyLightToolBelt {
         return result.compactMap(ManagedDisplay.init(dictionary:))
     }
 
+    /// Returns the largest number of regular desktop spaces on any managed display.
+    @available(macOS 14.0, *)
+    static func maximumDesktopCount() -> Int {
+        copyDisplaysWithSpaces()
+            .map { display in
+                display.spaces.filter(\.isDesktop).count
+            }
+            .max() ?? 0
+    }
+
     /// Returns the managed space ids for the given windows.
     @available(macOS 14.0, *)
     static func copySpaces(forWindows windowIDs: [CGWindowID]) -> [UInt64] {

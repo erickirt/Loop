@@ -96,6 +96,9 @@ enum WindowDirection: String, CaseIterable, Identifiable, Codable {
         ]
     }
 
+    static var relativeSpaceSwitching: [WindowDirection] { [.nextSpace, .previousSpace] }
+    static var numberedSpaceSwitching: [WindowDirection] { Array(spaceSwitching.dropFirst(relativeSpaceSwitching.count)) }
+
     static var sizeAdjustment: [WindowDirection] { [.larger, .smaller, .scaleUp, .scaleDown] }
     static var shrink: [WindowDirection] { [.shrinkTop, .shrinkBottom, .shrinkRight, .shrinkLeft, .shrinkHorizontal, .shrinkVertical] }
     static var grow: [WindowDirection] { [.growTop, .growBottom, .growRight, .growLeft, .growHorizontal, .growVertical] }
@@ -106,6 +109,7 @@ enum WindowDirection: String, CaseIterable, Identifiable, Codable {
     // Computed properties for checking conditions
     var isNoOp: Bool { [.noSelection, .noAction].contains(self) }
     var willChangeScreen: Bool { WindowDirection.screenSwitching.contains(self) }
+    var willChangeSpace: Bool { WindowDirection.spaceSwitching.contains(self) }
     var willAdjustSize: Bool { WindowDirection.sizeAdjustment.contains(self) }
     var willShrink: Bool { WindowDirection.shrink.contains(self) }
     var willGrow: Bool { WindowDirection.grow.contains(self) }
@@ -116,7 +120,7 @@ enum WindowDirection: String, CaseIterable, Identifiable, Codable {
 
     var hasRadialMenuAngle: Bool {
         let noAngleActions: [WindowDirection] = [.noAction, .noSelection, .minimize, .minimizeOthers, .hide, .initialFrame, .undo, .cycle]
-        return !(noAngleActions.contains(self) || shouldFillRadialMenu || willChangeScreen || willAdjustSize || willShrink || willGrow || willMove || willFocusWindow)
+        return !(noAngleActions.contains(self) || shouldFillRadialMenu || willChangeScreen || willChangeSpace || willAdjustSize || willShrink || willGrow || willMove || willFocusWindow)
     }
 
     var shouldFillRadialMenu: Bool {
