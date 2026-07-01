@@ -236,33 +236,6 @@ enum SkyLightToolBelt {
         return images
     }
 
-    /// Resolves a symbolic hotkey ID to its current `(keyCode, flags)` binding, auto-enabling
-    /// it if the user has it disabled. Returns `nil` if the symbol lookup fails or the hotkey
-    /// has no binding (e.g. the user cleared the shortcut in System Settings).
-    static func resolveSymbolicHotKey(_ hotKey: SLSSymbolicHotKey) -> (keyCode: CGKeyCode, flags: CGEventFlags)? {
-        guard let SLSGetSymbolicHotKeyValue = SkyLightSymbolLoader.SLSGetSymbolicHotKeyValue,
-              let SLSIsSymbolicHotKeyEnabled = SkyLightSymbolLoader.SLSIsSymbolicHotKeyEnabled,
-              let SLSSetSymbolicHotKeyEnabled = SkyLightSymbolLoader.SLSSetSymbolicHotKeyEnabled
-        else {
-            log.error("Failed to load SkyLight symbols in \(#function)")
-            return nil
-        }
-
-        var keyCode: CGKeyCode = 0
-        var rawFlags: UInt32 = 0
-        let status = SLSGetSymbolicHotKeyValue(hotKey, nil, &keyCode, &rawFlags)
-        guard status == .success else {
-            log.error("Failed to resolve symbolic hotkey \(hotKey): \(status.rawValue) — is the shortcut bound in System Settings?")
-            return nil
-        }
-
-        if !SLSIsSymbolicHotKeyEnabled(hotKey) {
-            _ = SLSSetSymbolicHotKeyEnabled(hotKey, true)
-        }
-
-        return (keyCode, CGEventFlags(rawValue: UInt64(rawFlags)))
-    }
-
     /// Retrieves the CGWindowLevel for a specific window.
     /// - Parameter windowID: The `CGWindowID` of the window to query.
     /// - Returns: The window's level, or `nil` if the lookup failed.
