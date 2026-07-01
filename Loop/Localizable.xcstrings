@@ -30052,6 +30052,9 @@
         }
       }
     },
+    "Space Switching" : {
+      "comment" : "Section header in the action picker of the Keybinds tab"
+    },
     "Stage Manager" : {
       "comment" : "Section header shown in settings",
       "localizations" : {

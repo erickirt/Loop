@@ -202,6 +202,13 @@ final class WindowActionEngine {
             case let .desktop(n): "desktop \(n)"
             }
         }
+
+        var desktopNumber: UInt? {
+            if case let .desktop(number) = self {
+                return number
+            }
+            return nil
+        }
     }
 
     private func throwWindow(_ window: Window, to space: SpaceDestination) async {
