@@ -119,7 +119,6 @@ extension SkyLightSymbolLoader {
 
     typealias SLPSPostEventRecordToFunc = @convention(c) (_ psn: UnsafeMutablePointer<ProcessSerialNumber>, _ bytes: UnsafeMutablePointer<UInt8>) -> CGError
     static let SLPSPostEventRecordTo: SLPSPostEventRecordToFunc? = loadSymbol("SLPSPostEventRecordTo")
-
 }
 
 typealias SLSConnectionID = UInt32
