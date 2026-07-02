@@ -18073,6 +18073,60 @@
         }
       }
     },
+    "Move to Desktop 1" : {
+      "comment" : "Window action"
+    },
+    "Move to Desktop 2" : {
+      "comment" : "Window action"
+    },
+    "Move to Desktop 3" : {
+      "comment" : "Window action"
+    },
+    "Move to Desktop 4" : {
+      "comment" : "Window action"
+    },
+    "Move to Desktop 5" : {
+      "comment" : "Window action"
+    },
+    "Move to Desktop 6" : {
+      "comment" : "Window action"
+    },
+    "Move to Desktop 7" : {
+      "comment" : "Window action"
+    },
+    "Move to Desktop 8" : {
+      "comment" : "Window action"
+    },
+    "Move to Desktop 9" : {
+      "comment" : "Window action"
+    },
+    "Move to Desktop 10" : {
+      "comment" : "Window action"
+    },
+    "Move to Desktop 11" : {
+      "comment" : "Window action"
+    },
+    "Move to Desktop 12" : {
+      "comment" : "Window action"
+    },
+    "Move to Desktop 13" : {
+      "comment" : "Window action"
+    },
+    "Move to Desktop 14" : {
+      "comment" : "Window action"
+    },
+    "Move to Desktop 15" : {
+      "comment" : "Window action"
+    },
+    "Move to Desktop 16" : {
+      "comment" : "Window action"
+    },
+    "Move to Next Space" : {
+      "comment" : "Window action"
+    },
+    "Move to Previous Space" : {
+      "comment" : "Window action"
+    },
     "Move Up" : {
       "comment" : "Window action",
       "localizations" : {
@@ -29997,6 +30051,9 @@
           }
         }
       }
+    },
+    "Space Switching" : {
+      "comment" : "Section header in the action picker of the Keybinds tab"
     },
     "Stage Manager" : {
       "comment" : "Section header shown in settings",
