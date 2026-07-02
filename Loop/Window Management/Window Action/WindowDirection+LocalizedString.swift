@@ -115,38 +115,11 @@ extension WindowDirection {
             String(localized: "Move to Next Space", comment: "Window action")
         case .previousSpace:
             String(localized: "Move to Previous Space", comment: "Window action")
-        case .moveToSpace1:
-            String(localized: "Move to Desktop 1", comment: "Window action")
-        case .moveToSpace2:
-            String(localized: "Move to Desktop 2", comment: "Window action")
-        case .moveToSpace3:
-            String(localized: "Move to Desktop 3", comment: "Window action")
-        case .moveToSpace4:
-            String(localized: "Move to Desktop 4", comment: "Window action")
-        case .moveToSpace5:
-            String(localized: "Move to Desktop 5", comment: "Window action")
-        case .moveToSpace6:
-            String(localized: "Move to Desktop 6", comment: "Window action")
-        case .moveToSpace7:
-            String(localized: "Move to Desktop 7", comment: "Window action")
-        case .moveToSpace8:
-            String(localized: "Move to Desktop 8", comment: "Window action")
-        case .moveToSpace9:
-            String(localized: "Move to Desktop 9", comment: "Window action")
-        case .moveToSpace10:
-            String(localized: "Move to Desktop 10", comment: "Window action")
-        case .moveToSpace11:
-            String(localized: "Move to Desktop 11", comment: "Window action")
-        case .moveToSpace12:
-            String(localized: "Move to Desktop 12", comment: "Window action")
-        case .moveToSpace13:
-            String(localized: "Move to Desktop 13", comment: "Window action")
-        case .moveToSpace14:
-            String(localized: "Move to Desktop 14", comment: "Window action")
-        case .moveToSpace15:
-            String(localized: "Move to Desktop 15", comment: "Window action")
-        case .moveToSpace16:
-            String(localized: "Move to Desktop 16", comment: "Window action")
+        case .moveToSpace1, .moveToSpace2, .moveToSpace3, .moveToSpace4,
+             .moveToSpace5, .moveToSpace6, .moveToSpace7, .moveToSpace8,
+             .moveToSpace9, .moveToSpace10, .moveToSpace11, .moveToSpace12,
+             .moveToSpace13, .moveToSpace14, .moveToSpace15, .moveToSpace16:
+            moveToDesktopName
         case .larger:
             String(localized: "Larger", comment: "Window action")
         case .smaller:
@@ -206,5 +179,13 @@ extension WindowDirection {
         case .cycle:
             String(localized: "Cycle", comment: "Window action")
         }
+    }
+
+    private var moveToDesktopName: String {
+        let desktopNumber = Int(spaceDestination?.desktopNumber ?? 0)
+        return String(
+            localized: "Move to Desktop \(desktopNumber)",
+            comment: "Window action; moves the current window to the Mission Control desktop identified by the number."
+        )
     }
 }
