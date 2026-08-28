@@ -76,9 +76,12 @@ struct StashActionConfigurationView: View {
     @ViewBuilder
     private func configurationSections() -> some View {
         LuminareSection(outerPadding: 0) {
-            LuminareTextField("Stash", text: Binding(get: { action.name ?? "" }, set: { action.name = $0 }))
-                .luminareFilledStates(.none)
-                .luminareBorderedStates(.none)
+            LuminareTextField(
+                WindowDirection.stash.name,
+                text: Binding(get: { action.name ?? "" }, set: { action.name = $0 })
+            )
+            .luminareFilledStates(.none)
+            .luminareBorderedStates(.none)
         }
 
         LuminareSection(outerPadding: 0) {

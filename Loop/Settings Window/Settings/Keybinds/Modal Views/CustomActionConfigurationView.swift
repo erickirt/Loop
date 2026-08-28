@@ -72,7 +72,7 @@ struct CustomActionConfigurationView: View {
     private func configurationSections() -> some View {
         LuminareSection(outerPadding: 0) {
             LuminareTextField(
-                "Custom Action",
+                WindowDirection.custom.name,
                 text: Binding(
                     get: { action.name ?? "" },
                     set: { action.name = $0 }
