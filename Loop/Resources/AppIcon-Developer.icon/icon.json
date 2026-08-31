@@ -1,7 +1,4 @@
 {
-  "features" : [
-    "refractivity"
-  ],
   "fill" : {
     "linear-gradient" : [
       "display-p3:0.29000,0.64300,1.00000,1.00000",
@@ -118,11 +115,6 @@
           "value" : 1
         }
       ],
-      "refractivity" : {
-        "depth" : 0.14,
-        "enabled" : true,
-        "strength" : 0.38
-      },
       "shadow" : {
         "kind" : "neutral",
         "opacity" : 0.75
@@ -200,9 +192,8 @@
     }
   ],
   "supported-platforms" : {
-    "circles" : [
-      "watchOS"
-    ],
-    "squares" : "shared"
+    "squares" : [
+      "macOS"
+    ]
   }
 }
